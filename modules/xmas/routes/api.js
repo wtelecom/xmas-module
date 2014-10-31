@@ -7,6 +7,7 @@
 var rek = require('rekuire'),
     m_settings = rek('modules/xmas/settings'),
     xmasModel = rek('modules/xmas/data/models/xmas'),
+    voteImage = rek('modules/xmas/middlewares/vote_image'),
     loadImagesWithAuthorVotes= rek('modules/xmas/middlewares/load_images_with_author_votes'),
     settings= rek('/settings');
 

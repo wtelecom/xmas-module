@@ -4,4 +4,4 @@ function load_images_with_author_votes(model){
         model.getImages();
     };
 };
-module.exports = filter_images;
+module.exports = load_images_with_author_votes;
