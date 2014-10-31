@@ -56,13 +56,13 @@ angular.module('IntrepidJS').controller('CtrlHighlight',
                 uniq_categories.forEach(function(cat) {
                   $scope.categories.push({
                     title: cat,
-                    items: _.filter(data, function(d) { d.category: cat} );
-                  }) //push
+                    items: _.filter(data, function(d) { d.category == cat} )
+                  }); //push
                 }); // forEach
 
               }); // success
 
-            }); //getXmas
+            }; //getXmas
 
             vote_sync = function(item, fn) {
               $http.post("/api/xmas/vote")
@@ -76,7 +76,8 @@ angular.module('IntrepidJS').controller('CtrlHighlight',
             }
 
             $scope.toggle_vote = function(item) {
-
+              if (item.voted) return $scope.unvote(item);
+              else return $scope.vote(item);
             };
 
             // Deprecated
@@ -86,12 +87,14 @@ angular.module('IntrepidJS').controller('CtrlHighlight',
               }
 
               $scope.voted_categories[item.category] = true;
+              item.voted != true;
               alert("Voted !");
             };
 
             $scope.unvote = function(item) {
 
               $scope.voted_categories[item.category] = false;
+              item.voted = false;
               alert("Unvoted !");
 
             };
