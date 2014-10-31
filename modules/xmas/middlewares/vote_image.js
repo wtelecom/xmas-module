@@ -3,4 +3,4 @@ function vote_image(model){
         model.voteImage(model);
     };
 };
-module.exports = load_images_with_author_votes;
+module.exports = vote_image;
