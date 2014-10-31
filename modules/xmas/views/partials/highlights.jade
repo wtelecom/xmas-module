@@ -14,9 +14,10 @@ div(ng-controller="CtrlHighlight")
                 div.caption
                   h3
                     | Thumbnail label
-                  span(ng-class="{ 'btn-success': item.vote }" ng-click="toggleVote(item)").btn
+                  span(ng-class="{ 'btn-success': item.voted }" ng-click="toggleVote(item)").btn
                     span.glyphicon.glyphicon-thumbs-up
                       |  Like
+
   // modal
   #photoModal(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true").modal.fade
     .modal-dialog
@@ -31,4 +32,3 @@ div(ng-controller="CtrlHighlight")
             | Title
         .modal-body
           img(src="http://fotos.eluniversal.com.mx/web_img/fotogaleria/kate1.jpg")
-
