@@ -38,3 +38,13 @@ exports.highlights = true;
 
 // Module actions
 exports.actions = [];
+
+exports.onTheFlyMiddlewares = {
+   measure: {
+       get: null,
+       getAll: exports.middlewaresPath + 'filter_my_photos',
+       create: exports.middlewaresPath + 'save_image_imageb64',
+       update: null,
+       delete: null,
+   }
+};
