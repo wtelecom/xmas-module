@@ -1,5 +1,17 @@
 div(ng-controller="CtrlHighlight")
   h4 Module Xmas {{ titulo }}
   
-  {{ obj.voted }} Has votado la imagen
-  {{ obj.url }} URL Imagen
+  div(ng-repeat="category in categories")
+      div.row
+        h3
+          | {{ category.title }}
+          div(ng-repeat="item in category.items")
+            div.col-xs-6.col-md-3
+              div.thumbnail
+                img(alt="la foto" src="{{ item.url }}")
+                div.caption
+                  h3
+                    | Thumbnail label
+                  span(ng-class="{ 'btn-success': item.vote }" ng-click="toggleVote(item)").btn
+                    span.glyphicon.glyphicon-thumbs-up
+                      |  Like
