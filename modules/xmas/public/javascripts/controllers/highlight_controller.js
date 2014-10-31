@@ -15,7 +15,9 @@ angular.module('IntrepidJS').controller('CtrlHighlight',
         '$scope',
         '$state',
         function ($scope, $state) {
+            var DEBUG = true;
             $scope.titulo = "Titulo";
+            $scope.voted_categories = {};
 
             $scope.categories = [
               {
@@ -24,7 +26,8 @@ angular.module('IntrepidJS').controller('CtrlHighlight',
                   {
                     _id: 1,
                     url: 'http://fotos.eluniversal.com.mx/web_img/fotogaleria/kate1.jpg',
-                    voted: true
+                    voted: true,
+                    category: 'De 0 a 3 años'
                   }
                 ]
               },
@@ -34,7 +37,8 @@ angular.module('IntrepidJS').controller('CtrlHighlight',
                   {
                     _id: 2,
                     url: 'http://g.cdn.ecn.cl/fotografia/files/2014/06/fotos-perturbadoras-6.jpg',
-                    voted: false
+                    voted: false,
+                    category: 'De 3 a 6 años'
                   }
                 ]
               }
@@ -54,6 +58,7 @@ angular.module('IntrepidJS').controller('CtrlHighlight',
 
                 // Make oredered array
                 uniq_categories.forEach(function(cat) {
+                  $scope.voted_categories[cat] = false;
                   $scope.categories.push({
                     title: cat,
                     items: _.filter(data, function(d) { d.category == cat} )
@@ -75,29 +80,35 @@ angular.module('IntrepidJS').controller('CtrlHighlight',
 
             }
 
-            $scope.toggle_vote = function(item) {
-              if (item.voted) return $scope.unvote(item);
-              else return $scope.vote(item);
+            $scope.toggleVote = function(item) {
+              if (DEBUG) console.log("toggle_vote(item)");
+
+              if (item.voted) return unvote(item);
+              else return vote(item);
             };
 
             // Deprecated
-            $scope.vote = function(item) {
+            var vote = function(item) {
               if ($scope.voted_categories[item.category]==true) {
                 return alert("Ya has votado esta categoría");
               }
 
               $scope.voted_categories[item.category] = true;
-              item.voted != true;
+              item.voted = true;
               alert("Voted !");
             };
-
-            $scope.unvote = function(item) {
+            
+            var unvote = function(item) {
 
               $scope.voted_categories[item.category] = false;
               item.voted = false;
               alert("Unvoted !");
 
             };
+
+            $scope.popupImage = function() {
+              console.log("POPUP");
+            }
 
         }
     ]
