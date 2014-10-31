@@ -24,7 +24,7 @@ angular.module('IntrepidJS').controller('CtrlHighlight',
                   {
                     _id: 1,
                     url: 'http://fotos.eluniversal.com.mx/web_img/fotogaleria/kate1.jpg',
-                    vote: true
+                    voted: true
                   }
                 ]
               },
@@ -34,7 +34,7 @@ angular.module('IntrepidJS').controller('CtrlHighlight',
                   {
                     _id: 2,
                     url: 'http://g.cdn.ecn.cl/fotografia/files/2014/06/fotos-perturbadoras-6.jpg',
-                    vote: false
+                    voted: false
                   }
                 ]
               }
@@ -44,19 +44,57 @@ angular.module('IntrepidJS').controller('CtrlHighlight',
               $http.get("/api/xmas")
               .success(function(data) {
 
-               var categories = _.map(data, function(d){
-                 return d.category
-               });
+                // Map category of each xmas
+                var categories = _.map(data, function(d){
+                  return d.category;
+                });
 
-               var uniq_categories = _.uniq(categories);
+                // Get distinct categories
+                var uniq_categories = _.uniq(categories);
 
-               data.forEach(function(d) {
+                // Make oredered array
+                uniq_categories.forEach(function(cat) {
+                  $scope.categories.push({
+                    title: cat,
+                    items: _.filter(data, function(d) { d.category: cat} );
+                  }) //push
+                }); // forEach
 
-               })
+              }); // success
 
-             });
+            }); //getXmas
+
+            vote_sync = function(item, fn) {
+              $http.post("/api/xmas/vote")
+              .success(function(data) {
+                return fn(data);
+              }).error(function(data){ return fn(false); });
+            }
+
+            unvote_sync = function(item, fn) {
 
             }
+
+            $scope.toggle_vote = function(item) {
+
+            };
+
+            // Deprecated
+            $scope.vote = function(item) {
+              if ($scope.voted_categories[item.category]==true) {
+                return alert("Ya has votado esta categoría");
+              }
+
+              $scope.voted_categories[item.category] = true;
+              alert("Voted !");
+            };
+
+            $scope.unvote = function(item) {
+
+              $scope.voted_categories[item.category] = false;
+              alert("Unvoted !");
+
+            };
 
         }
     ]
