@@ -12,7 +12,6 @@ div(ng-controller="CtrlHighlight")
                 div.caption
                   h3
                     | Thumbnail label
-                  span(ng-class="{ 'btn-success': item.vote }" ng-click="toggleVote(item)").btn
+                  span(ng-class="{ 'btn-success': item.voted }" ng-click="toggleVote(item)").btn
                     span.glyphicon.glyphicon-thumbs-up
                       |  Like
-  chorra
