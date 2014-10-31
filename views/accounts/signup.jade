@@ -14,7 +14,7 @@ block content
         input.form-control.password(type='password', placeholder='Password',name="password", ng-model="password")
         i.glyphicon.form-control-feedback(ng-if="password", ng-class="errors.password ? 'glyphicon-remove' : 'glyphicon-ok'")
       
-      button.btn.btn-lg.btn-primary.btn-block(type='submit', ng-disabled="disabled")= __('Sing up')
+      button.btn.btn-lg.btn-primary.btn-block(type='submit', ng-disabled="disabled")= __('Sign up')
     br
     .row(ng-if="!_.isEmpty(errors)")
         .col-xs-8.col-xs-offset-2
