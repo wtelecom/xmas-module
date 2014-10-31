@@ -33,5 +33,20 @@
 	"Manage your custom modules": "Manage your custom modules",
 	"Xmas": "Xmas",
 	"Chat": "Chat",
-	"Mail": "Mail"
+	"Mail": "Mail",
+	"Please sign in": "Please sign in",
+	"Sign in": "Sign in",
+	"Username": "Username",
+	"First name": "First name",
+	"Cancel": "Cancel",
+	"Send": "Send",
+	"Last name": "Last name",
+	"Email": "Email",
+	"Roles": "Roles",
+	"Password": "Password",
+	"Change password": "Change password",
+	"Type your old password": "Type your old password",
+	"Type your new password": "Type your new password",
+	"Repeat your old password": "Repeat your old password",
+	"Organize your homepage": "Organize your homepage"
 }
