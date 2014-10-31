@@ -97,7 +97,7 @@ angular.module('IntrepidJS').controller('CtrlHighlight',
               item.voted = true;
               alert("Voted !");
             };
-
+            
             var unvote = function(item) {
 
               $scope.voted_categories[item.category] = false;
