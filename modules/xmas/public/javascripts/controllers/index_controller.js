@@ -14,7 +14,9 @@ angular.module('IntrepidJS').controller('XmasIndexController',
     [
         '$scope',
         '$state',
-        function ($scope, $state) {
+        'restService',
+        function ($scope, $state, restService) {
+          $scope.form = {};
           $scope.categories = [
             {title: 'Menores de 4',
              imgs: [
@@ -43,6 +45,22 @@ angular.module('IntrepidJS').controller('XmasIndexController',
               ]
             }, 
           ];
+          $scope.upload_picture = function(){
+            //console.log(angular.element("input type=['file']").files);
+            //$scope.form.picture = $scope.selectedFile;
+            restService.post($scope.form, apiPrefix + '/xmas/xmas/create',
+                function(data){
+                  console.log("success:", data);
+                },
+                function(data){
+                  console.log("error:", data);
+                }
+                )};
+            $('input[type=file]').bootstrapFileInput();
+            //$scope.onFileSelect = function($files) {
+                //$scope.selectedFile = $files[0];
+                //$scope.hasFile = true;
+            //};
         }
     ]
 );

@@ -27,7 +27,8 @@ angular.module(
         'summernote',
         'angular-loading-bar',
         // 'ngICheck'
-        'ngDraggable'
+        'ngDraggable',
+        'naif.base64'
     ],
     permissionList
 );
