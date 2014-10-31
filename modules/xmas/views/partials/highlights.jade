@@ -8,10 +8,27 @@ div(ng-controller="CtrlHighlight")
           div(ng-repeat="item in category.items")
             div.col-xs-6.col-md-3
               div.thumbnail
-                img(alt="la foto" src="{{ item.url }}")
+                img(alt="la foto" src="{{ item.url }}"
+                    ng-click="popupImage()" 
+                    data-toggle="modal" data-target="#photoModal")
                 div.caption
                   h3
                     | Thumbnail label
                   span(ng-class="{ 'btn-success': item.voted }" ng-click="toggleVote(item)").btn
                     span.glyphicon.glyphicon-thumbs-up
                       |  Like
+
+  // modal
+  #photoModal(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true").modal.fade
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button(type="button" data-dismiss="modal").close
+            span(aria-hidden="true")
+              | &times;
+            span.sr-only
+              | Close
+          h4(#photoModal).modal-title
+            | Title
+        .modal-body
+          img(src="http://fotos.eluniversal.com.mx/web_img/fotogaleria/kate1.jpg")

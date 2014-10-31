@@ -106,6 +106,10 @@ angular.module('IntrepidJS').controller('CtrlHighlight',
 
             };
 
+            $scope.popupImage = function() {
+              console.log("POPUP");
+            }
+
         }
     ]
 );
