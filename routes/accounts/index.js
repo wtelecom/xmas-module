@@ -43,13 +43,16 @@ module.exports = {
                     if (err) { return next(err); }
                     if (!user) { return res.send({success: false}); }
                     
-                    var uid = {
+                    var uid = { 'username': user.sAMAccountName }
+                    
+                    var toUpdate = {
                         'username': user.sAMAccountName,
                         'firstName': user.givenName,
-                        'lastName': user.sn
+                        'lastName': user.sn,
+                        'email': user.userPrincipalName
                     };
                     // TODO: refactor with proper mongodb calls and error control
-                    Account.update( uid, uid, {'upsert': true}, function(error, nRows, result){
+                    Account.update( uid, toUpdate, {'upsert': true}, function(error, nRows, result){
                         
                         if (error) { return next(error); }                        
                             
