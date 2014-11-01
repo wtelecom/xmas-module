@@ -43,31 +43,25 @@ module.exports = {
                     if (err) { return next(err); }
                     if (!user) { return res.send({success: false}); }
                     
-                    var uid = { 'username': user.sAMAccountName};
+                    var uid = {
+                        'username': user.sAMAccountName,
+                        'firstName': user.givenName,
+                        'lastName': user.sn
+                    };
                     // TODO: refactor with proper mongodb calls and error control
                     Account.update( uid, uid, {'upsert': true}, function(error, nRows, result){
                         
-                        if (!error) {
+                        if (error) { return next(error); }                        
                             
-                            Account.findOne(uid,function(err,obj){
-                                if (err) {
-                                    next(err);
-                                }
-                                
-                                req.logIn(obj, function(err) {
-                                    if (err) { return next(err); }
-                                    return res.send({success: true});
-                                });
-                                
-                                
-                                
-                                
+                        Account.findOne(uid,function(err,obj){
+                            if (err) { return next(err); }
+                            
+                            req.logIn(obj, function(err) {
+                                if (err) { return next(err); }
+                                return res.send({success: true});
                             });
-                        }
-
+                        });
                         
-                        
-
                     });
                     
      
