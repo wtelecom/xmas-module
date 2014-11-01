@@ -44,37 +44,30 @@ module.exports = {
                     if (!user) { return res.send({success: false}); }
                     
                     var uid = { 'username': user.sAMAccountName};
-                    
-                    var local_user = null;
-                    
-                    
-                    Account.findOne( uid, uid, function(error, nRows, result){
-                        console.log(result);
+                    // TODO: refactor with proper mongodb calls and error control
+                    Account.update( uid, uid, {'upsert': true}, function(error, nRows, result){
                         
-                        if (error) { // Create
-                            Account.insert(uid, uid, function(error, nRows, result){
+                        if (!error) {
+                            
+                            Account.findOne(uid,function(err,obj){
+                                if (err) {
+                                    next(err);
+                                }
+                                
+                                req.logIn(obj, function(err) {
+                                    if (err) { return next(err); }
+                                    return res.send({success: true});
+                                });
                                 
                                 
-                                console.log(error);
-                                console.log(nRows);
-                                console.log(result);
                                 
-                                
-                                if (!error) { local_user = result; }
-                                else { return next(err); }
                                 
                             });
                         }
-                        
-                        console.log(result);
-                        local_user = result;
-                        console.log(local_user);
+
                         
                         
-                        req.logIn(local_user, function(err) {
-                                if (err) { return next(err); }
-                                return res.send({success: true});
-                        });
+
                     });
                     
      
