@@ -3,13 +3,16 @@ h1 Xmas
   .panel-body
     .col-xs-2
       label Nombre del autor
-    .col-xs-3
       input(type="text", ng-model="form.author").form-control
     .col-xs-3
-      input(type="file", ng-model="form.picture", name="file", base-sisty-four-input)
+      label Selecciona una categoría
+      select(ng-model="form.selectedCat", ng-options="cat.title for cat in categories").form-control
+    .col-xs-3
+      label Selecciona una foto
+      br
+      input(type="file", ng-model="form.picture", name="file",ng-file-select="onFileSelect($files)", base-sisty-four-input)
     .col-xs-2
-      button.btn.success(ng-click="upload_picture()") Guardar foto
-    {{ form.picture }}
+      button.btn.btn-primary(ng-click="upload_picture()", style="margin-top: 25px") Guardar foto
 .panel.panel-default.col-xs-12
   h2 Mis imágenes
   div(ng-repeat="cat in categories")

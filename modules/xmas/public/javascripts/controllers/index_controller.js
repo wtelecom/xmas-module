@@ -15,7 +15,8 @@ angular.module('IntrepidJS').controller('XmasIndexController',
         '$scope',
         '$state',
         'restService',
-        function ($scope, $state, restService) {
+        '$upload',
+        function ($scope, $state, restService, $upload) {
           $scope.form = {};
           $scope.categories = [
             {title: 'Menores de 4',
@@ -56,11 +57,24 @@ angular.module('IntrepidJS').controller('XmasIndexController',
                   console.log("error:", data);
                 }
                 )};
+
+            $scope.onFileSelect = function($files) {
+                $scope.form.picture = $files[0];
+            };
+
+            $scope.upload_picture = function(){
+                $scope.upload = $upload.upload({
+                    url: apiPrefix + '/xmas/xmas/create',
+                    file: $scope.form.picture[0],
+                    data: $scope.form
+                }).progress(function(evt) {
+                    console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
+                }).success(function(data, status, headers, config) {
+                    //$scope.user = data.object;
+                    angular.element('.file-input-name').remove();
+                });
+            };
             $('input[type=file]').bootstrapFileInput();
-            //$scope.onFileSelect = function($files) {
-                //$scope.selectedFile = $files[0];
-                //$scope.hasFile = true;
-            //};
         }
     ]
 );
