@@ -18,6 +18,7 @@ angular.module('IntrepidJS').controller('XmasIndexController',
         '$upload',
         function ($scope, $state, restService, $upload) {
           $scope.form = {};
+          $scope.picture;
           $scope.categories = [
             {title: 'Menores de 4',
              imgs: [
@@ -46,7 +47,7 @@ angular.module('IntrepidJS').controller('XmasIndexController',
               ]
             }, 
           ];
-          $scope.upload_picture = function(){
+        /*  $scope.upload_picture = function(){
             //console.log(angular.element("input type=['file']").files);
             //$scope.form.picture = $scope.selectedFile;
             restService.post($scope.form, apiPrefix + '/xmas/xmas/create',
@@ -57,15 +58,31 @@ angular.module('IntrepidJS').controller('XmasIndexController',
                   console.log("error:", data);
                 }
                 )};
+*/
 
             $scope.onFileSelect = function($files) {
-                $scope.form.picture = $files[0];
+                $scope.picture= $files[0];
+                console.log($scope.picture);
+                $scope.form.picture=btoa($scope.picture);
+                console.log($scope.form.picture);
+                var file = $scope.picture;
+                // converts file to binary string
+                reader.readAsBinaryString(file);
+            };
+            $scope.readerOnload = function(e){
+              var base64 = btoa(e.target.result);
+              //$scope.$apply(function(){
+              $scope.form.picture=base64;
+              //});
             };
 
+            var reader = new FileReader();
+            reader.onload = $scope.readerOnload;
             $scope.upload_picture = function(){
+              console.log($scope.form.picture);
                 $scope.upload = $upload.upload({
                     url: apiPrefix + '/xmas/xmas/create',
-                    file: $scope.form.picture[0],
+                    //file: $scope.form.picture,
                     data: $scope.form
                 }).progress(function(evt) {
                     console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
