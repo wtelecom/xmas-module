@@ -1,5 +1,15 @@
 div(ng-controller="CtrlHighlight")
-  h4 Module Xmas {{ titulo }}
+    div(ng-repeat="cat in categories")
+      h3 {{cat.title}}
+      .row
+          div(ng-repeat="img in my_images")
+              div(ng-if="img.category == cat.title")
+                .col-xs-12.col-sm-6.col-lg-3
+                      div.thumbnail
+                          img(ng-src='{{img.url}}').img-responsive
+                          .caption
+                              h3 {{img.author}}
+                                  span.badge(ng-if="img.votes") {{img.votes}}
   
   div(ng-repeat="category in categories")
       div.row

@@ -14,10 +14,19 @@ angular.module('IntrepidJS').controller('CtrlHighlight',
     [
         '$scope',
         '$state',
-        function ($scope, $state) {
+        'restService',
+        function ($scope, $state, restService) {
             var DEBUG = true;
             $scope.titulo = "Titulo";
             $scope.voted_categories = {};
+
+            restService.get({}, apiPrefix + '/xmas/misc/all',
+                function(data){
+                    console.log(data.objects);
+                    $scope.categories = data.objects;
+                },
+                function(){}
+            );
 
             $scope.categories = [
               {
@@ -97,7 +106,7 @@ angular.module('IntrepidJS').controller('CtrlHighlight',
               item.voted = true;
               alert("Voted !");
             };
-            
+
             var unvote = function(item) {
 
               $scope.voted_categories[item.category] = false;

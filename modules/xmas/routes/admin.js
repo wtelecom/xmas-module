@@ -22,6 +22,13 @@ routes['/' + m_settings.route_prefix + '/admin/parent'] =  {
     }
 };
 
+routes['/' + m_settings.route_prefix + '/admin/config'] =  {
+    methods: ['get'],
+    middleware: [],
+    fn: function(req, res, next) {
+        res.render(m_settings.viewsPath + 'admin/config');
+    }
+};
+
 
 module.exports = routes;
-

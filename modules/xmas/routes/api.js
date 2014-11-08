@@ -18,7 +18,7 @@ var routes = {};
  * @desc  Parent admin Xmas route
  * @return object - Xmas admin parent page render
  */
-routes[settings.apiPrefix + '/' + m_settings.route_prefix + '/misc/get_all_images'] =  {
+routes[settings.apiPrefix + '/' + m_settings.route_prefix + '/misc/all'] =  {
     methods: ['get'],
     middleware: [loadImagesWithAuthorVotes(xmasModel)],
     fn: function(req, res, next) {

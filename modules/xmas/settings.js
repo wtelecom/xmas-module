@@ -37,7 +37,12 @@ exports.routesPath = modulePath + '/routes/';
 exports.highlights = true;
 
 // Module actions
-exports.actions = [];
+exports.actions = [
+    {
+        url: 'admin.modules.xmas.config',
+        name: 'Configuración del servicio'
+    }
+];
 
 exports.onTheFlyMiddlewares = {
    xmas: {

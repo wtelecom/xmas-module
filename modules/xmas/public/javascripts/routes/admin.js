@@ -22,6 +22,16 @@ angular.module('IntrepidJS').config(
                                 controller: "XmasAdminIndexController"
                             }
                     }
+                }).
+                state('admin.modules.xmas.config', {
+                    url: '/config',
+                    views: {
+                        "actions_children_content":
+                            {
+                                templateUrl: "/xmas/admin/config",
+                                controller: "XmasAdminIndexController"
+                            }
+                    }
                 });
         }
     ]

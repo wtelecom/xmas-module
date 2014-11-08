@@ -1,0 +1,30 @@
+div.row
+    div.col-md-12
+        h4.title= __('Xmas actions - Xmas config')
+        hr
+    div.col-xs-12
+        div.row
+            div.col-xs-12.col-md-6
+                div.col-xs-12
+                    h5= __('Xmas categories') 
+                div.col-xs-12(style="margin-bottom: 10px;")
+                    div.input-group
+                        input(type="text", ng-model="formData.category", class="form-control", placeholder="#{__('Category name')}")
+                        span.input-group-btn
+                            a(href="", class="btn", ng-click="addCategory()")= __('Add category')
+                div.col-xs-12
+                    div(ng-show="categories.length")
+                        ul.list-group
+                            li.list-group-item(ng-repeat="category in categories")
+                                //- span {{ category.title }}
+                                ng-edit-in-place(value="category.title", cid="category._id")
+                                //- a
+                                //-     i.fa.fa-trash-o.fa-fw.pull-right
+                                //-     i.fa.fa-pencil.fa-fw.pull-right
+                    div(ng-show="!categories.length")
+                        div.alert.alert-warning.alert-dismissable
+                            button(type="button", class="close", data-dismiss="alert", aria-hidden="true") ×
+                            p
+                                strong= __('Warning!')
+                                &nbsp; 
+                                span= __('No categories availables')
