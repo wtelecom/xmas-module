@@ -18,35 +18,21 @@ angular.module('IntrepidJS').controller('XmasIndexController',
         '$upload',
         function ($scope, $state, restService, $upload) {
           $scope.form = {};
-          $scope.picture;
+          $scope.form.artist = '';
+          $scope.form.selectedCat = '';
+          $scope.xmas = null;
+          console.log($scope.form.artist.length);
+          $scope.my_images = null;
           $scope.categories = [
-            {title: 'Menores de 4',
-             imgs: [
-              { url: "http://d1lalstwiwz2br.cloudfront.net/images_users/tiny_mce/PersianSultan/phpgiGgA8.jpeg",
-                author: "Marcos García Ramírez"
-              },
-              { url: "http://d1lalstwiwz2br.cloudfront.net/images_users/tiny_mce/PersianSultan/phpfJVW9D.png",
-                author: "JC García Ramírez"
-              },
-              { url: "http://d1lalstwiwz2br.cloudfront.net/images_users/tiny_mce/PersianSultan/phpb0a7U8.jpeg",
-                author: "Marcos Ramírez Perez"
-              },
-              ]
-            }, 
-            {title: 'Entre 5 y 12',
-             imgs: [
-              { url: "http://2.bp.blogspot.com/-EKTLKkuSnV0/Ue7XHo8MxgI/AAAAAAAACJg/S5iNHTcG9d0/s1600/Think+Twice,+Code+Once!+by+pcbots.jpg",
-                author: "Miguel Angel de lujo"
-              },
-              { url: "http://4.bp.blogspot.com/-YB0k1FfNrqI/Umfb8V7iduI/AAAAAAAACdI/rj-vxr_rZKI/s640/Code+for+Coffee+By+Pcbots.jpg",
-                author: "Mi niño el más guapo del mundo"
-              },
-              { url: "http://fc06.deviantart.net/fs71/i/2010/044/f/c/ProgrammingOOP_Wallpaper_Black_by_hexeno.png",
-                author: "Que bonita mi niñaaa"
-              },
-              ]
-            }, 
+            {title: 'Menores de 4'
+            },
+            {title: 'Entre 5 y 12'
+            },
           ];
+          restService.get({}, apiPrefix + '/xmas/xmas',
+          function(data){
+              $scope.my_images = data.objects;
+          }, function(){});
         /*  $scope.upload_picture = function(){
             //console.log(angular.element("input type=['file']").files);
             //$scope.form.picture = $scope.selectedFile;
@@ -61,35 +47,43 @@ angular.module('IntrepidJS').controller('XmasIndexController',
 */
 
             $scope.onFileSelect = function($files) {
-                $scope.picture= $files[0];
-                console.log($scope.picture);
-                $scope.form.picture=btoa($scope.picture);
-                console.log($scope.form.picture);
-                var file = $scope.picture;
+                $scope.xmas= $files[0];
+                console.log($scope.xmas);
+                $scope.form.xmas=btoa($scope.xmas);
+                console.log($scope.form.xmas);
+                var file = $scope.xmas;
                 // converts file to binary string
                 reader.readAsBinaryString(file);
             };
             $scope.readerOnload = function(e){
               var base64 = btoa(e.target.result);
               //$scope.$apply(function(){
-              $scope.form.picture=base64;
+              $scope.form.xmas=base64;
               //});
             };
 
             var reader = new FileReader();
             reader.onload = $scope.readerOnload;
             $scope.upload_picture = function(){
-              console.log($scope.form.picture);
-                $scope.upload = $upload.upload({
-                    url: apiPrefix + '/xmas/xmas/create',
-                    //file: $scope.form.picture,
-                    data: $scope.form
-                }).progress(function(evt) {
-                    console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
-                }).success(function(data, status, headers, config) {
-                    //$scope.user = data.object;
-                    angular.element('.file-input-name').remove();
-                });
+            //   console.log($scope.form.picture);
+                console.log($scope.form.selectedCat);
+            //   console.log($scope.form);
+              $scope.form.category = $scope.form.selectedCat.title;
+              console.log($scope.form);
+              restService.post($scope.form, apiPrefix + '/xmas/xmas/create', function() {
+
+              },
+              function(){});
+                // $scope.upload = $upload.upload({
+                //     url: apiPrefix + '/xmas/xmas/create',
+                //     //file: $scope.form.picture,
+                //     data: $scope.form
+                // }).progress(function(evt) {
+                //     console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
+                // }).success(function(data, status, headers, config) {
+                //     //$scope.user = data.object;
+                //     angular.element('.file-input-name').remove();
+                // });
             };
             $('input[type=file]').bootstrapFileInput();
         }

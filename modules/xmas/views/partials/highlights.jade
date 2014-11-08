@@ -14,9 +14,11 @@ div(ng-controller="CtrlHighlight")
                 div.caption
                   h3
                     | Thumbnail label
-                  span(ng-class="{ 'btn-success': item.voted }" ng-click="toggleVote(item)").btn
-                    span.glyphicon.glyphicon-thumbs-up
-                      |  Like
+                  span(ng-class="{ 'btn-success': item.voted, 'btn-default': !item.voted }" ng-click="toggleVote(item)").btn.btn-block
+                    strong
+                        span.glyphicon.glyphicon-thumbs-up
+                        &nbsp;
+                        | Like
 
   // modal
   #photoModal(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true").modal.fade

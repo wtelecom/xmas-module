@@ -3,24 +3,26 @@ h1 Xmas
   .panel-body
     .col-xs-2
       label Nombre del autor
-      input(type="text", ng-model="form.author").form-control
+      input(type="text", ng-model="form.artist").form-control
     .col-xs-3
       label Selecciona una categoría
       select(ng-model="form.selectedCat", ng-options="cat.title for cat in categories").form-control
     .col-xs-3
       label Selecciona una foto
       br
-      input(type="file", ng-model="form.picture", name="file",ng-file-select="onFileSelect($files)")
+      input(type="file", ng-model="form.xmas", name="file",ng-file-select="onFileSelect($files)")
     .col-xs-2
-      button.btn.btn-primary(ng-click="upload_picture()", style="margin-top: 25px") Guardar foto
+      button.btn.btn-primary(ng-click="upload_picture()", style="margin-top: 25px", ng-class="form.artist.length == 0 ? 'disabled' : (form.selectedCat.length == 0 ? 'disabled' : (xmas == null ? 'disabled' : ''))") Guardar foto
 .panel.panel-default.col-xs-12
   h2 Mis imágenes
   div(ng-repeat="cat in categories")
     h3 {{cat.title}}
     .row
-      .col-xs-12.col-sm-6.col-lg-3(ng-repeat="img in cat.imgs")
-        div.thumbnail
-          img(ng-src='{{img.url}}').img-responsive
-          .caption
-            h3 {{img.author}}
-              span.badge(ng-if="img.votes") {{img.votes}}
+        div(ng-repeat="img in my_images")
+            div(ng-if="img.category == cat.title")
+              .col-xs-12.col-sm-6.col-lg-3
+                    div.thumbnail
+                        img(ng-src='{{img.url}}').img-responsive
+                        .caption
+                            h3 {{img.author}}
+                                span.badge(ng-if="img.votes") {{img.votes}}

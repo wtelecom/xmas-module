@@ -40,10 +40,10 @@ exports.highlights = true;
 exports.actions = [];
 
 exports.onTheFlyMiddlewares = {
-   measure: {
+   xmas: {
        get: null,
        getAll: exports.middlewaresPath + 'filter_my_photos',
-       create: exports.middlewaresPath + 'save_image_imageb64',
+       create: exports.middlewaresPath + 'save_imageb64',
        update: null,
        delete: null,
    }

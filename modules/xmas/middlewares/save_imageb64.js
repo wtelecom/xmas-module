@@ -28,7 +28,7 @@ function updateObject() {
                        if (err) {
                            res.json({error: res.__('File not saved')});
                        } else {
-                           req.objects.xmas = pathTreat;
+                           req.objects.url = pathTreat;
                            req.objects.save();
                        }
                        next();
@@ -40,7 +40,7 @@ function updateObject() {
                            if (err) {
                                res.json({error: res.__('File not saved')});
                            } else {
-                               req.objects.xmas = pathTreat;
+                               req.objects.url = pathTreat;
                                req.objects.save();
                            }
                            next();
