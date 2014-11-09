@@ -35,13 +35,12 @@ routes[settings.apiPrefix + '/' + m_settings.route_prefix + '/misc/all'] =  {
  * @desc  Parent admin Xmas route
  * @return object - Xmas admin parent page render
  */
-routes[settings.apiPrefix + '/' + m_settings.route_prefix + '/misc/vote'] =  {
-    methods: ['get'],
+routes[settings.apiPrefix + '/' + m_settings.route_prefix + '/misc/xmas/vote/:id'] =  {
+    methods: ['post'],
     middleware: [voteImage(xmasModel)],
     fn: function(req, res, next) {
         res.send({
-            'success':true,
-            'images':req.objects
+            'success': true
             }
         );
     }

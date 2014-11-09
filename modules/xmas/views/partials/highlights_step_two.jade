@@ -7,7 +7,7 @@ div(ng-controller="CtrlHighlight")
             div.col-xs-6.col-md-3
               div.thumbnail
                 img(src="{{ item.url }}"
-                    ng-click="popupImage()" 
+                    ng-click="popupImage(item.url)" 
                     data-toggle="modal" data-target="#photoModal")
                 div.caption
                   span(ng-class="{ 'btn-success': item.voted, 'btn-default': !item.voted }" ng-click="toggleVote(item)").btn.btn-block

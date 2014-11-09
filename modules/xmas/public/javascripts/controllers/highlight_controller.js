@@ -100,10 +100,10 @@ angular.module('IntrepidJS').controller('CtrlHighlight',
             }
 
             $scope.toggleVote = function(item) {
-              if (DEBUG) console.log("toggle_vote(item)");
-
-              if (item.voted) return unvote(item);
-              else return vote(item);
+                restService.post({}, apiPrefix + '/xmas/misc/xmas/vote/' + item._id,
+                function(){}, function(){});
+            //   if (item.voted) return unvote(item);
+            //   else return vote(item);
             };
 
             // Deprecated
