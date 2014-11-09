@@ -7,6 +7,7 @@
 var rek = require('rekuire'),
     m_settings = rek('modules/xmas/settings'),
     xmasModel = rek('modules/xmas/data/models/xmas'),
+    configModel = rek('modules/xmas/data/models/config'),
     voteImage = rek('modules/xmas/middlewares/vote_image'),
     loadImagesWithAuthorVotes= rek('modules/xmas/middlewares/load_images_with_author_votes'),
     settings= rek('/settings');
@@ -43,6 +44,42 @@ routes[settings.apiPrefix + '/' + m_settings.route_prefix + '/misc/vote'] =  {
             'images':req.objects
             }
         );
+    }
+};
+
+routes[settings.apiPrefix + '/' + m_settings.route_prefix + '/misc/config/add/category'] =  {
+    methods: ['post'],
+    middleware: [],
+    fn: function(req, res, next) {
+        configModel.addCategory(req.body.category, req, function() {
+            res.send({
+                'success':true
+            });
+        });
+    }
+};
+
+routes[settings.apiPrefix + '/' + m_settings.route_prefix + '/misc/config/update/category'] =  {
+    methods: ['post'],
+    middleware: [],
+    fn: function(req, res, next) {
+        configModel.updateCategory(req.body.category, req, function() {
+            res.send({
+                'success':true
+            });
+        });
+    }
+};
+
+routes[settings.apiPrefix + '/' + m_settings.route_prefix + '/misc/config/remove/category'] =  {
+    methods: ['post'],
+    middleware: [],
+    fn: function(req, res, next) {
+        configModel.removeCategory(req.body.category, req, function() {
+            res.send({
+                'success':true
+            });
+        });
     }
 };
 
