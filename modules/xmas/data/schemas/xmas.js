@@ -22,19 +22,6 @@ var xmasSchema = new mongoose.Schema({
 
 
 xmasSchema.statics.getImages = function(req, next){
-    // console.log(req);
-    // var current_step = configSchema.getCurrentStep();
-    // this.find()
-    //     .exec(function(err, images) {
-    //         if (err) {
-    //             return next(err);
-    //         }
-    //         req.objects = images;
-    //         return next();
-    //     });
-
-    // db.xmas.aggregate({$group:{_id:"$category", no:{$sum:1}, images:{$push:"$$ROOT"}}})
-
     this.aggregate(
             {
                 $group: {
@@ -52,6 +39,7 @@ xmasSchema.statics.getImages = function(req, next){
             if (err) {
                 return next(err);
             }
+
             req.objects = result;
             return next();
         });

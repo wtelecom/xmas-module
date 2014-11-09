@@ -25,7 +25,7 @@ routes[settings.apiPrefix + '/' + m_settings.route_prefix + '/misc/all'] =  {
     fn: function(req, res, next) {
         res.send({
             'success':true,
-            'images':req.objects
+            'categories':req.objects
             }
         );
     }

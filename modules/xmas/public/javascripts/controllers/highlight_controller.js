@@ -20,63 +20,73 @@ angular.module('IntrepidJS').controller('CtrlHighlight',
             $scope.titulo = "Titulo";
             $scope.voted_categories = {};
 
-            restService.get({}, apiPrefix + '/xmas/misc/all',
-                function(data){
-                    console.log(data.objects);
-                    $scope.categories = data.objects;
-                },
-                function(){}
+            restService.get({}, apiPrefix + '/xmas/config',
+              function(data){
+                  if (data.objects.length) {
+                      if (data.objects[0].step < 3) {
+                          restService.get({}, apiPrefix + '/xmas/misc/all',
+                              function(data){
+                                  $scope.categories = data.categories;
+                              },
+                              function(){}
+                          );
+                      }
+                  }
+              },
+              function(){}
             );
 
-            $scope.categories = [
-              {
-                title: 'De 0 a 3 años',
-                items: [
-                  {
-                    _id: 1,
-                    url: 'http://fotos.eluniversal.com.mx/web_img/fotogaleria/kate1.jpg',
-                    voted: true,
-                    category: 'De 0 a 3 años'
-                  }
-                ]
-              },
-              {
-                title: 'De 3 a 6 años',
-                items: [
-                  {
-                    _id: 2,
-                    url: 'http://g.cdn.ecn.cl/fotografia/files/2014/06/fotos-perturbadoras-6.jpg',
-                    voted: false,
-                    category: 'De 3 a 6 años'
-                  }
-                ]
-              }
-            ]
 
-            getXmas = function() {
-              $http.get("/api/xmas")
-              .success(function(data) {
 
-                // Map category of each xmas
-                var categories = _.map(data, function(d){
-                  return d.category;
-                });
+            // $scope.categories = [
+            //   {
+            //     title: 'De 0 a 3 años',
+            //     items: [
+            //       {
+            //         _id: 1,
+            //         url: 'http://fotos.eluniversal.com.mx/web_img/fotogaleria/kate1.jpg',
+            //         voted: true,
+            //         category: 'De 0 a 3 años'
+            //       }
+            //     ]
+            //   },
+            //   {
+            //     title: 'De 3 a 6 años',
+            //     items: [
+            //       {
+            //         _id: 2,
+            //         url: 'http://g.cdn.ecn.cl/fotografia/files/2014/06/fotos-perturbadoras-6.jpg',
+            //         voted: false,
+            //         category: 'De 3 a 6 años'
+            //       }
+            //     ]
+            //   }
+            // ]
 
-                // Get distinct categories
-                var uniq_categories = _.uniq(categories);
-
-                // Make oredered array
-                uniq_categories.forEach(function(cat) {
-                  $scope.voted_categories[cat] = false;
-                  $scope.categories.push({
-                    title: cat,
-                    items: _.filter(data, function(d) { d.category == cat} )
-                  }); //push
-                }); // forEach
-
-              }); // success
-
-            }; //getXmas
+            // getXmas = function() {
+            //   $http.get("/api/xmas")
+            //   .success(function(data) {
+            //
+            //     // Map category of each xmas
+            //     var categories = _.map(data, function(d){
+            //       return d.category;
+            //     });
+            //
+            //     // Get distinct categories
+            //     var uniq_categories = _.uniq(categories);
+            //
+            //     // Make oredered array
+            //     uniq_categories.forEach(function(cat) {
+            //       $scope.voted_categories[cat] = false;
+            //       $scope.categories.push({
+            //         title: cat,
+            //         items: _.filter(data, function(d) { d.category == cat} )
+            //       }); //push
+            //     }); // forEach
+            //
+            //   }); // success
+            //
+            // }; //getXmas
 
             vote_sync = function(item, fn) {
               $http.post("/api/xmas/vote")

@@ -1,20 +1,8 @@
 div(ng-controller="CtrlHighlight")
-    div(ng-repeat="cat in categories")
-      h3 {{cat.title}}
-      .row
-          div(ng-repeat="img in my_images")
-              div(ng-if="img.category == cat.title")
-                .col-xs-12.col-sm-6.col-lg-3
-                      div.thumbnail
-                          img(ng-src='{{img.url}}').img-responsive
-                          .caption
-                              h3 {{img.author}}
-                                  span.badge(ng-if="img.votes") {{img.votes}}
-  
-  div(ng-repeat="category in categories")
+    div(ng-repeat="category in categories")
       div.row
-        h3
-          | {{ category.title }}
+          div.col-xs-12
+              h3 {{ category._id }}
           div(ng-repeat="item in category.items")
             div.col-xs-6.col-md-3
               div.thumbnail
@@ -22,8 +10,6 @@ div(ng-controller="CtrlHighlight")
                     ng-click="popupImage()" 
                     data-toggle="modal" data-target="#photoModal")
                 div.caption
-                  h3
-                    | Thumbnail label
                   span(ng-class="{ 'btn-success': item.voted, 'btn-default': !item.voted }" ng-click="toggleVote(item)").btn.btn-block
                     strong
                         span.glyphicon.glyphicon-thumbs-up
