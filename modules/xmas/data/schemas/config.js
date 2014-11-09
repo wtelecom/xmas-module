@@ -12,10 +12,11 @@ var configSchema = new mongoose.Schema({
     categories: [String]
 });
 
-configSchema.statics.getConfig = function(){
-    this.findOne(function(err, config){
-        return config.step;
-    })
+configSchema.statics.getStep = function(cb) {
+    this.findOne()
+        .exec(function(err, config) {
+            return cb(config.step);
+    });
 };
 
 configSchema.statics.addCategory = function(obj, req, next) {

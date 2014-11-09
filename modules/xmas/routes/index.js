@@ -6,7 +6,8 @@
 
 var _ = require('underscore'),
     rek = require('rekuire'),
-    m_settings = rek('modules/xmas/settings');
+    m_settings = rek('modules/xmas/settings'),
+    configModel = rek('modules/xmas/data/models/config');
 
 
 var routes = {};
@@ -33,7 +34,21 @@ routes['/' + m_settings.route_prefix + '/partials/:name'] =  {
     middleware: [],
     fn: function(req, res, next) {
         var name = req.params.name;
-        res.render(m_settings.viewsPath + '/partials/' + name);
+        if (name == 'highlights') {
+            configModel.getStep(function(step) {
+                if (step == 1) {
+                    res.render(m_settings.viewsPath + '/partials/highlights_step_one');
+                } else if (step == 2) {
+                    res.render(m_settings.viewsPath + '/partials/highlights_step_two');
+                } else if (step == 3){
+                    res.render(m_settings.viewsPath + '/partials/highlights_step_three');
+                } else {
+                    res.render(m_settings.viewsPath + '/partials/highlights_step_one');
+                }
+            });
+        } else {
+            res.render(m_settings.viewsPath + '/partials/' + name);
+        }
     }
 };
 

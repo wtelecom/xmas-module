@@ -6,7 +6,7 @@ div(ng-controller="CtrlHighlight")
           div(ng-repeat="item in category.items")
             div.col-xs-6.col-md-3
               div.thumbnail
-                img(alt="la foto" src="{{ item.url }}"
+                img(src="{{ item.url }}"
                     ng-click="popupImage()" 
                     data-toggle="modal" data-target="#photoModal")
                 div.caption
@@ -16,17 +16,14 @@ div(ng-controller="CtrlHighlight")
                         &nbsp;
                         | Like
 
-  // modal
-  #photoModal(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true").modal.fade
-    .modal-dialog
-      .modal-content
-        .modal-header
-          button(type="button" data-dismiss="modal").close
-            span(aria-hidden="true")
-              | &times;
-            span.sr-only
-              | Close
-          h4(#photoModal).modal-title
-            | Title
-        .modal-body
-          img(src="http://fotos.eluniversal.com.mx/web_img/fotogaleria/kate1.jpg")
+    div.modal.fade#photoModal(tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true")
+        div.modal-dialog.modal-lg
+            div.modal-content(style="display: initial;")
+                .modal-header
+                    button(type="button" data-dismiss="modal").close
+                        span(aria-hidden="true")
+                            | &times;
+                    .modal-body
+                        div.col-xs-12
+                          div.thumbnail
+                            img(src="{{modal_image}}")
