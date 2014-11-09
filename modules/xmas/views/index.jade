@@ -27,4 +27,4 @@ div(ng-repeat="cat in categories")
                     img(ng-src='{{img.url}}').img-responsive
                     .caption
                         h3 {{img.artist}}
-                            span.badge(ng-if="img.votes") {{img.votes}}
+                        button.btn.btn-danger.btn-block(ng-click="deleteImage(img)")= __('Delete')

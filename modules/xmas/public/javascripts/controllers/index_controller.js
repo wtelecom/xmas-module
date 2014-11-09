@@ -77,6 +77,15 @@ angular.module('IntrepidJS').controller('XmasIndexController',
                 }
             };
 
+            $scope.deleteImage = function(image) {
+                restService.post({}, apiPrefix + '/xmas/xmas/' + image._id + '/delete',
+                function(){
+                    $scope.my_images = _.filter($scope.my_images, function(img){
+                        return image._id != img._id;
+                    });
+                }, function(){});
+            };
+
             $('input[type=file]').bootstrapFileInput();
         }
     ]
