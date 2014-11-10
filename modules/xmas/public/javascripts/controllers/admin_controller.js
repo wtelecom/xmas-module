@@ -21,6 +21,7 @@ angular.module('IntrepidJS').controller('XmasAdminIndexController',
                 {title:'Votación de Xmas', order: 2},
                 {title:'Resultados', order: 3}
             ];
+            $scope.categories = [];
             var categories = [];
             var configId = null;
             restService.get({}, apiPrefix + '/xmas/config',
