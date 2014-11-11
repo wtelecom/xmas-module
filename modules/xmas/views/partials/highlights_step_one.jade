@@ -4,11 +4,23 @@ div(ng-controller="CtrlHighlight")
           div.col-xs-12
               h3 {{ category._id }}
           div(ng-repeat="item in category.items")
-            div.col-xs-6.col-md-3
-              div.thumbnail
-                img(src="{{ item.url }}"
-                    ng-click="popupImage(item.url)" 
-                    data-toggle="modal" data-target="#photoModal")
+            div.col-xs-6.col-md-3(ng-if="item.url")
+              if user
+                div.thumbnail.btn-success.text-center(ng-if="item.voted")
+                  img(src="{{ item.url }}"
+                      ng-click="popupImage(item.url)" 
+                      data-toggle="modal" data-target="#photoModal")
+                  p= __('Selected')
+                div.thumbnail.text-center(ng-if="!item.voted")
+                  img(src="{{ item.url }}"
+                      ng-click="popupImage(item.url)" 
+                      data-toggle="modal" data-target="#photoModal")
+                  button.btn.btn-primary(ng-click="toggleVote( item._id )") Votar
+              else 
+                div.thumbnail
+                  img(src="{{ item.url }}"
+                      ng-click="popupImage(item.url)" 
+                      data-toggle="modal" data-target="#photoModal")
               
     div.modal.fade#photoModal(tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true")
         div.modal-dialog.modal-lg

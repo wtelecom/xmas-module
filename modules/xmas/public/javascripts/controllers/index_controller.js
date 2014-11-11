@@ -63,13 +63,15 @@ angular.module('IntrepidJS').controller('XmasIndexController',
                 restService.get({}, apiPrefix + '/xmas/xmas',
                   function(data){
                     angular.copy({}, $scope.form);
+                    $scope.form.artist = "";
+                    $scope.form.selectedCat = [];
+                    $scope.form.xmas = null;
                     $('.file-input-name').text('');
                     $scope.my_images = data.objects;
                   }, function(){}
                   );
               },
-              function(){
-              });
+              function(){});
             };
 
             $scope.checkCategoryContent = function(images, cat) {
@@ -81,15 +83,12 @@ angular.module('IntrepidJS').controller('XmasIndexController',
             };
 
             $scope.deleteImage = function(image) {
-                restService.post({}, apiPrefix + '/xmas/xmas/' + image._id + '/delete',
-                function(){
+              restService.post({}, apiPrefix + '/xmas/xmas/' + image._id + '/delete',
+                  function(){
                     $scope.my_images = _.filter($scope.my_images, function(img){
-                        return image._id != img._id;
+                      return image._id != img._id;
                     });
-                }, function(){
-
-
-});
+                  }, function(){});
             };
             $('input[type=file]').bootstrapFileInput();
         }

@@ -14,8 +14,8 @@ var xmasSchema = new mongoose.Schema({
     votes: [{ type: mongoose.Schema.Types.ObjectId,
              ref: 'Account'}],
     uploaded_at: {type: Date},
-    artist: String,
-    category: {type: String},
+    artist: {type: String, required: true},
+    category: {type: String, required: true},
     url: String
 });
 
@@ -24,11 +24,16 @@ xmasSchema.statics.getImages = function(req, next) {
     var project = null;
     var schema = this;
     var step = configModel.getStep(function(step) {
-        if (step == 2) {
+        switch(step){
+          case 1:
             project = {category: 1, url: 1, votes: 1};
-        } else if (step == 3) {
-        } else {
-            project = {category: 1, url: 1};
+            break;
+          case 2:
+            project = {category: 1, url: 1, votes: 1};
+            break;
+          case 3:
+            //project = {category: 1, url: 1, votes: 1};
+            break;
         }
 
         schema.aggregate([
@@ -52,8 +57,13 @@ xmasSchema.statics.getImages = function(req, next) {
                 if (err) {
                     return next(err);
                 }
-                if (step == 2) {
+                if ([1,2].indexOf(step) !== -1) {
                     _.each(result, function(category) {
+                        if (!req.isAuthenticated()){
+                        _.each(category.items, function(item) {
+                          delete item.votes;
+                        });
+                        }else{
                         _.each(category.items, function(item) {
                             var check_vote = _.find(item.votes, function(vote) {
                                 if (String(vote) == String(req.user._id)) {
@@ -62,29 +72,21 @@ xmasSchema.statics.getImages = function(req, next) {
                                     return false;
                                 }
                             });
-
+                            if (step===1){
+                              delete item.votes;
+                            }
                             if (check_vote) {
                                 item['voted'] = true;
                             } else {
                                 item['voted'] = false;
                             }
                         });
-                    });
-
-                    // TODO: Delete votes field
-                    _.each(result, function(r) {
-                        _.each(r.items, function(rr) {
-                            var rr_without = _.omit(rr, 'votes');
-                            console.log(rr);
-                            console.log(rr_without);
-                            // rr = rr.toObject();
-                            rr = rr_without;
-                        });
+                    }
                     });
 
                     req.objects = result;
                     return next();
-                } else if (step == 1) {
+                } else if (step === 3) {
                     req.objects = result;
                     return next();
                 }
@@ -111,7 +113,7 @@ xmasSchema.statics.voteImage = function(id, req, next) {
 
                     var categories_votes = _.where(agg_result, {_id: result.category});
 
-                    if (!_.find(categories_votes[0].items[0], function(vote) {
+                    if (!_.find(categories_votes[0].items, function(vote) {
                         if (String(vote) == String(req.user._id)) {
                             return true;
                         } else {
