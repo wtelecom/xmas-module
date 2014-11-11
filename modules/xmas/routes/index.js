@@ -21,7 +21,11 @@ routes['/' + m_settings.route_prefix] =  {
     methods: ['get'],
     middleware: [],
     fn: function(req, res, next) {
+      if (req.isAuthenticated()){
         res.render(m_settings.viewsPath + 'index');
+      }else{
+        res.render(m_settings.viewsPath + 'please_signin');
+      }
     }
 };
 

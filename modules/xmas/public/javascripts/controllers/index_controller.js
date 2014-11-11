@@ -58,15 +58,18 @@ angular.module('IntrepidJS').controller('XmasIndexController',
             var reader = new FileReader();
             reader.onload = $scope.readerOnload;
             $scope.upload_picture = function(){
-                $scope.form.category = $scope.form.selectedCat;
-                restService.post($scope.form, apiPrefix + '/xmas/xmas/create', function(data) {
-                    restService.get({}, apiPrefix + '/xmas/xmas',
-                      function(data){
-                          $scope.my_images = data.objects;
-                      }, function(){}
-                    );
-                },
-                function(){});
+              $scope.form.category = $scope.form.selectedCat;
+              restService.post($scope.form, apiPrefix + '/xmas/xmas/create', function(data) {
+                restService.get({}, apiPrefix + '/xmas/xmas',
+                  function(data){
+                    angular.copy({}, $scope.form);
+                    $('.file-input-name').text('');
+                    $scope.my_images = data.objects;
+                  }, function(){}
+                  );
+              },
+              function(){
+              });
             };
 
             $scope.checkCategoryContent = function(images, cat) {
@@ -83,9 +86,11 @@ angular.module('IntrepidJS').controller('XmasIndexController',
                     $scope.my_images = _.filter($scope.my_images, function(img){
                         return image._id != img._id;
                     });
-                }, function(){});
-            };
+                }, function(){
 
+
+});
+            };
             $('input[type=file]').bootstrapFileInput();
         }
     ]

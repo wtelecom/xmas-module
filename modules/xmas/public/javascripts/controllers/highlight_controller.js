@@ -126,7 +126,7 @@ angular.module('IntrepidJS').controller('CtrlHighlight',
             };
 
             $scope.popupImage = function(image) {
-                $scope.modal_image = "http://localhost:8000" + image;
+                $scope.modal_image = image;
                 $('#photoModal').modal('show');
             }
 

@@ -15,7 +15,11 @@ var configSchema = new mongoose.Schema({
 configSchema.statics.getStep = function(cb) {
     this.findOne()
         .exec(function(err, config) {
+          if (config){ 
             return cb(config.step);
+          }else{
+            return cb(1);
+          }
     });
 };
 

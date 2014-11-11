@@ -48,6 +48,9 @@ angular.module('IntrepidJS').controller('HeaderController',
                                         location.reload();
                                     }, 0);
                                     
+                                }else{
+                                  alert("ha habido un problema:", data, status, headers, config);
+                                  console.log("ha habido un problema:", data, status, headers, config);
                                 }
                             },
                             function(data, status, headers, config) {
