@@ -51,7 +51,7 @@ angular.module('IntrepidJS').controller('CtrlHighlight',
             }
 
             $scope.toggleVote = function(item_id) {
-              restService.post({}, apiPrefix + '/xmas/misc/xmas/vote/' + item_id,
+              restService.post({}, apiPrefix + '/xmas/misc/xmas/vote/' + item_id._id,
                   function(d){
                     init();    //TODO: just upload the images votes
                   }, function(){});
