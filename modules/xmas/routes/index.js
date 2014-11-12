@@ -23,7 +23,7 @@ routes['/' + m_settings.route_prefix] =  {
     fn: function(req, res, next) {
       if (req.isAuthenticated()){
         configModel.getStep(function(step) {
-            if (step == 2) {
+            if (step == 1) {
                 res.render(m_settings.viewsPath + 'index');
             } else {
                 res.send();
