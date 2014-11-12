@@ -22,17 +22,45 @@ var xmasSchema = new mongoose.Schema({
 
 xmasSchema.statics.getImages = function(req, next) {
     var project = null;
+    var group  = null;
     var schema = this;
     var step = configModel.getStep(function(step) {
         switch(step){
           case 1:
-            project = {category: 1, url: 1, votes: 1};
+            project = {category: 1, url: 1};
+            group = {
+                _id: "$category",
+                total: {
+                    $sum: 1
+                },
+                items: {
+                    $push: "$$ROOT"
+                }
+            };
             break;
           case 2:
             project = {category: 1, url: 1, votes: 1};
+            group = {
+                _id: "$category",
+                total: {
+                    $sum: 1
+                },
+                items: {
+                    $push: "$$ROOT"
+                }
+            };
             break;
           case 3:
-            //project = {category: 1, url: 1, votes: 1};
+            project = {category: 1, url: 1, votes: 1};
+            group = {
+                _id: "$category",
+                total: {
+                    $sum: 1
+                },
+                items: {
+                    $push: "$$ROOT"
+                }
+            };
             break;
         }
 
@@ -41,15 +69,7 @@ xmasSchema.statics.getImages = function(req, next) {
                     $project: project
                 },
                 {
-                    $group: {
-                        _id: "$category",
-                        total: {
-                            $sum: 1
-                        },
-                        items: {
-                            $push: "$$ROOT"
-                        }
-                    }
+                    $group: group
                 }
             ])
             .exec(function(err, result) {
@@ -57,36 +77,44 @@ xmasSchema.statics.getImages = function(req, next) {
                 if (err) {
                     return next(err);
                 }
-                if ([1,2].indexOf(step) !== -1) {
+                if (step == 1) {
+                    req.objects = result;
+                    return next();
+                } else if (step == 2) {
                     _.each(result, function(category) {
-                        if (!req.isAuthenticated()){
-                        _.each(category.items, function(item) {
-                          delete item.votes;
-                        });
-                        }else{
-                        _.each(category.items, function(item) {
-                            var check_vote = _.find(item.votes, function(vote) {
-                                if (String(vote) == String(req.user._id)) {
-                                    return true;
+                        if (!req.isAuthenticated()) {
+                            _.each(category.items, function(item) {
+                                delete item.votes;
+                            });
+                        } else {
+                            _.each(category.items, function(item) {
+                                var check_vote = _.find(item.votes, function(vote) {
+                                    if (String(vote) == String(req.user._id)) {
+                                        return true;
+                                    } else {
+                                        return false;
+                                    }
+                                });
+
+                                delete item.votes;
+
+                                if (check_vote) {
+                                    item['voted'] = true;
                                 } else {
-                                    return false;
+                                    item['voted'] = false;
                                 }
                             });
-                            if (step===1){
-                              delete item.votes;
-                            }
-                            if (check_vote) {
-                                item['voted'] = true;
-                            } else {
-                                item['voted'] = false;
-                            }
-                        });
-                    }
+                        }
                     });
 
                     req.objects = result;
                     return next();
                 } else if (step === 3) {
+                    _.each(result, function(category) {
+                        _.each(category.items, function(item) {
+                            item['total'] = item.votes.length;
+                        });
+                    });
                     req.objects = result;
                     return next();
                 }
