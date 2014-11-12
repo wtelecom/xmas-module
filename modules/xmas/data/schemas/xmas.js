@@ -51,15 +51,15 @@ xmasSchema.statics.getImages = function(req, next) {
             };
             break;
           case 3:
-            project = {category: 1, url: 1, votes: 1};
+            project = {category: 1, url: 1, votes: 1, author: 1, artist:1};
             group = {
                 _id: "$category",
-                total: {
-                    $sum: 1
-                },
                 items: {
                     $push: "$$ROOT"
-                }
+                },
+                total: {
+                    $sum: "$$ROOT".votes
+                },
             };
             break;
         }
@@ -73,10 +73,10 @@ xmasSchema.statics.getImages = function(req, next) {
                 }
             ])
             .exec(function(err, result) {
-
                 if (err) {
                     return next(err);
                 }
+
                 if (step == 1) {
                     req.objects = result;
                     return next();
@@ -113,6 +113,7 @@ xmasSchema.statics.getImages = function(req, next) {
                     _.each(result, function(category) {
                         _.each(category.items, function(item) {
                             item['total'] = item.votes.length;
+                            // item['percent']
                         });
                     });
                     req.objects = result;

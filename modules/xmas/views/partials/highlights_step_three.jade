@@ -5,11 +5,15 @@ div(ng-controller="CtrlHighlight")
               h3 {{ category._id }}
           div(ng-repeat="item in category.items")
             div.col-xs-6.col-md-3
-              div.thumbnail
-                img(src="{{ item.url }}"
-                    ng-click="popupImage(item.url)" 
-                    data-toggle="modal" data-target="#photoModal")
-              
+                div.alert.alert-info
+                    img(src="/images/winner.png", style="float: left; position: absolute; left: 70%;")
+                    div.thumbnail(style="margin-bottom: 0px;")
+                        img(src="{{ item.url }}"
+                            ng-click="popupImage(item.url)" 
+                            data-toggle="modal" data-target="#photoModal")
+                        div.caption.text-center
+                            h3 {{ item.artist }}
+                                  
     div.modal.fade#photoModal(tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true")
         div.modal-dialog.modal-lg
             div.modal-content(style="display: initial;")
