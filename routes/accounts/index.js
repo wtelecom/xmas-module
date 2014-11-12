@@ -37,37 +37,32 @@ module.exports = {
             }
         },
         {
-            methods: ['post'],
-            fn: function(req, res, next) {
-                //passport.authenticate('ldapauth', function(err, user, info) {
-                    //if (err) { return next(err); }
-                    //if (!user) { return res.send({success: false}); }
-                    
-                    //var uid = { 'username': user.sAMAccountName }
-                    
-                    //var toUpdate = {
-                        //'username': user.sAMAccountName,
-                        //'firstName': user.givenName,
-                        //'lastName': user.sn,
-                        //'email': user.userPrincipalName
-                    //};
-                    //// TODO: refactor with proper mongodb calls and error control
-                    //Account.update( uid, toUpdate, {'upsert': true}, function(error, nRows, result){
-                        
-                        //if (error) { return next(error); }                        
-                            
-                        //Account.findOne(uid,function(err,obj){
-                            //if (err) { return next(err); }
-                            
-                            //req.logIn(obj, function(err) {
-                                //if (err) { return next(err); }
-                                //return res.send({success: true});
-                            //});
-                        //});
-                        
-                    //});
-
-
+          methods: ['post'],
+          fn: function(req, res, next) {
+            if (settings.auth_method === 'ldap'){
+              passport.authenticate('ldapauth', function(err, user, info) {
+                if (err) { return next(err); }
+                if (!user) { return res.send({success: false}); }
+                var uid = { 'username': user.sAMAccountName }
+                var toUpdate = {
+                  'username': user.sAMAccountName,
+                'firstName': user.givenName,
+                'lastName': user.sn,
+                'email': user.userPrincipalName
+                };
+                // TODO: refactor with proper mongodb calls and error control
+                Account.update( uid, toUpdate, {'upsert': true}, function(error, nRows, result){
+                  if (error) { return next(error); }                        
+                  Account.findOne(uid,function(err,obj){
+                    if (err) { return next(err); }
+                    req.logIn(obj, function(err) {
+                      if (err) { return next(err); }
+                      return res.send({success: true});
+                    });
+                  });
+                });
+              })(req, res, next);
+            } else if (settings.auth_method === 'local'){
               passport.authenticate('local', function(err, user, info) {
                 if (err) { return next(err); }
                 if (!user) { return res.send({success: false}); }
@@ -75,8 +70,9 @@ module.exports = {
                   if (err) { return next(err); }
                   return res.send({success: true});
                 });
-                })(req, res, next);
+              })(req, res, next);
             }
+          }
         }
     ],
 
