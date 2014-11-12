@@ -49,8 +49,7 @@ angular.module('IntrepidJS').controller('HeaderController',
                                     }, 0);
                                     
                                 }else{
-                                  alert("ha habido un problema:", data, status, headers, config);
-                                  console.log("ha habido un problema:", data, status, headers, config);
+                                  $scope.credentials_problem = true;
                                 }
                             },
                             function(data, status, headers, config) {

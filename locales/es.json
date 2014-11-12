@@ -60,5 +60,6 @@
 	"Select a picture": "Select a picture",
 	"Save picture": "Save picture",
 	"Selected": "Selected",
-	"Username in use": "Username in use"
+	"Username in use": "Username in use",
+	"Username or password incorrect": "Username or password incorrect"
 }
