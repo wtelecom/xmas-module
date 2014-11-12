@@ -42,13 +42,13 @@ block header
                                         a(ui-sref='#{section.real_name}')= __(section.name)
                 ul.nav.navbar-nav.navbar-right.main-menu
                     if user
-                        li.dropdown(ng-controller="globalChatMessages")
-                            a.dropdown-toggle(href='', data-toggle='dropdown' openchat)
-                                i.fa.fa-comment.fa-lg
-                                | &nbsp;
-                                = __('Chats')
-                                | &nbsp;
-                                span.badge.ng-cloak.globalUnread(ng-if="globalChatMessages") {{globalChatMessages}}
+                        //- li.dropdown(ng-controller="globalChatMessages")
+                        //-     a.dropdown-toggle(href='', data-toggle='dropdown' openchat)
+                        //-         i.fa.fa-comment.fa-lg
+                        //-         | &nbsp;
+                        //-         = __('Chats')
+                        //-         | &nbsp;
+                        //-         span.badge.ng-cloak.globalUnread(ng-if="globalChatMessages") {{globalChatMessages}}
                         li.dropdown
                             a.dropdown-toggle(href='', data-toggle='dropdown')
                                 span.glyphicon.glyphicon-user &nbsp; 
@@ -72,7 +72,7 @@ block header
                                         &nbsp;
                                         span= __('Log out')
                     else
-                        li(ui-sref-active="active")
-                            a(ui-sref='signup')= __('Signup')
+                        //- li(ui-sref-active="active")
+                        //-     a(ui-sref='signup')= __('Signup')
                         li(ui-sref-active="active", ng-click="provide_path()")
                             a(ui-sref='login')= __('Login')

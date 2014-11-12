@@ -22,7 +22,13 @@ routes['/' + m_settings.route_prefix] =  {
     middleware: [],
     fn: function(req, res, next) {
       if (req.isAuthenticated()){
-        res.render(m_settings.viewsPath + 'index');
+        configModel.getStep(function(step) {
+            if (step == 2) {
+                res.render(m_settings.viewsPath + 'index');
+            } else {
+                res.send();
+            }
+        });
       }else{
         res.render(m_settings.viewsPath + 'please_signin');
       }
