@@ -5,8 +5,24 @@ div(ng-controller="CtrlHighlight")
               h3 {{ category._id }}
           div(ng-repeat="item in category.items")
             div.col-xs-6.col-md-3
-                div.alert.alert-info
-                    img(src="/images/winner.png", style="float: left; position: absolute; left: 70%;")
+                div(ng-if="item.winner")
+                    div.alert.alert-warning
+                        div.alert.alert-danger.alert-dismissable(style="float: left; position: absolute; right: 0; top: 0; border-radius: 25px;")
+                            button(type="button", class="close", data-dismiss="alert", aria-hidden="true") ×
+                            i.fa.fa-heart.fa-2x
+                            &nbsp;
+                            strong {{ item.percent}} %
+                        //- i.fa.fa-heart.fa-5x(style="float: left; position: absolute; left: 70%; color: #ED5565;")
+                        div.thumbnail(style="margin-bottom: 0px;")
+                            img(src="{{ item.url }}"
+                                ng-click="popupImage(item.url)" 
+                                data-toggle="modal" data-target="#photoModal")
+                            div.caption.text-center
+                                h3 {{ item.artist }}
+                div(ng-if="!item.winner")
+                    div.alert.alert-info.alert-dismissable(style="float: left; position: absolute; right: 0; border-radius: 25px;")
+                        button(type="button", class="close", data-dismiss="alert", aria-hidden="true") ×
+                        strong {{ item.percent}} %
                     div.thumbnail(style="margin-bottom: 0px;")
                         img(src="{{ item.url }}"
                             ng-click="popupImage(item.url)" 

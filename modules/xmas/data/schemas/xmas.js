@@ -13,6 +13,7 @@ var xmasSchema = new mongoose.Schema({
     },
     votes: [{ type: mongoose.Schema.Types.ObjectId,
              ref: 'Account'}],
+    total_votes: Number,
     uploaded_at: {type: Date},
     artist: {type: String, required: true},
     category: {type: String, required: true},
@@ -51,14 +52,14 @@ xmasSchema.statics.getImages = function(req, next) {
             };
             break;
           case 3:
-            project = {category: 1, url: 1, votes: 1, author: 1, artist:1};
+            project = {category: 1, url: 1, votes: 1, artist:1, total_votes:1};
             group = {
                 _id: "$category",
                 items: {
                     $push: "$$ROOT"
                 },
                 total: {
-                    $sum: "$$ROOT".votes
+                    $sum: "$$ROOT.total_votes"
                 },
             };
             break;
@@ -113,9 +114,14 @@ xmasSchema.statics.getImages = function(req, next) {
                     _.each(result, function(category) {
                         _.each(category.items, function(item) {
                             item['total'] = item.votes.length;
-                            // item['percent']
+                            item['percent'] = parseFloat((item.votes.length * 100) / category.total);
                         });
+                        var item_most_voted = _.max(category.items, function(item) {
+                            return item.percent;
+                        });
+                        item_most_voted["winner"] = true;
                     });
+
                     req.objects = result;
                     return next();
                 }
@@ -150,6 +156,7 @@ xmasSchema.statics.voteImage = function(id, req, next) {
                         }
                     })) {
                         result.votes.push(req.user);
+                        result.total_votes = result.votes.length;
                         result.markModified('votes');
                         result.save();
 
@@ -174,13 +181,16 @@ xmasSchema.statics.voteImage = function(id, req, next) {
                                     }
                                 );
                                 votes_to_delete.markModified('votes');
+                                votes_to_delete.total_votes = votes_to_delete.votes.length;
                                 votes_to_delete.save();
 
                                 result.votes.push(req.user);
+                                result.total_votes = result.votes.length;
                                 result.markModified('votes');
                                 result.save();
                             } else {
                                 result.votes.push(req.user);
+                                result.total_votes = result.votes.length;
                                 result.markModified('votes');
                                 result.save();
                             }
