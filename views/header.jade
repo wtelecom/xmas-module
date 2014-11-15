@@ -72,7 +72,8 @@ block header
                                         &nbsp;
                                         span= __('Log out')
                     else
-                        //- li(ui-sref-active="active")
-                        //-     a(ui-sref='signup')= __('Signup')
+                        if auth == 'local'
+                            li(ui-sref-active="active")
+                                a(ui-sref='signup')= __('Signup')
                         li(ui-sref-active="active", ng-click="provide_path()")
                             a(ui-sref='login')= __('Login')
