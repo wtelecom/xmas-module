@@ -28,7 +28,7 @@ xmasSchema.statics.getImages = function(req, next) {
     var step = configModel.getStep(function(step) {
         switch(step){
           case 1:
-            project = {category: 1, url: 1};
+            project = {category: 1, url: 1, artist: 1};
             group = {
                 _id: "$category",
                 total: {
@@ -40,7 +40,7 @@ xmasSchema.statics.getImages = function(req, next) {
             };
             break;
           case 2:
-            project = {category: 1, url: 1, votes: 1};
+            project = {category: 1, url: 1, votes: 1, artist: 1, votes: 1};
             group = {
                 _id: "$category",
                 total: {

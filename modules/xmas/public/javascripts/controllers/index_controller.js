@@ -59,7 +59,7 @@ angular.module('IntrepidJS').controller('XmasIndexController',
             reader.onload = $scope.readerOnload;
             $scope.upload_picture = function(){
               $scope.form.category = $scope.form.selectedCat;
-              $scope.form.artist = user.username + ' by ' + $scope.form.artist;
+              $scope.form.artist = $scope.form.artist + ' by ' + user.username;
               restService.post($scope.form, apiPrefix + '/xmas/xmas/create', function(data) {
                 restService.get({}, apiPrefix + '/xmas/xmas',
                   function(data){

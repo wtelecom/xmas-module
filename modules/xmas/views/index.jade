@@ -4,8 +4,8 @@
 .panel.panel-default
   .panel-body
     .col-xs-4
-      label= __('Author name')
-      input(type="text", ng-model="form.artist").form-control
+      label= __('Author name and age')
+      input(type="text", ng-model="form.artist", placeholder="#{__('John kid - 8 years old')}").form-control
     .col-xs-3
       label= __('Select a category') 
       select(ng-model="form.selectedCat", ng-options="cat for cat in categories").form-control

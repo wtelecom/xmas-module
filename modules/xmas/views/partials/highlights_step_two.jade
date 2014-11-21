@@ -5,10 +5,15 @@ div(ng-controller="CtrlHighlight")
               h3 {{ category._id }}
           div(ng-repeat="item in category.items")
             div.col-xs-6.col-md-3
+              div.alert.alert-success.alert-dismissable(style="float: left; position: absolute; right: 0; border-radius: 25px;")
+                button(type="button", class="close", data-dismiss="alert", aria-hidden="true") ×
+                strong {{ item.votes.length ? item.votes.length : 0 }} votes
               div.thumbnail
                 img(src="{{ item.url }}"
                     ng-click="popupImage(item.url)" 
                     data-toggle="modal" data-target="#photoModal")
+                div.caption.text-center
+                  h3 {{ item.artist }}
                 div.caption
                   span(ng-class="{ 'btn-success': item.voted, 'btn-default': !item.voted }" ng-click="toggleVote(item)").btn.btn-block
                     strong

@@ -1,14 +1,17 @@
 div(ng-controller="CtrlHighlight")
-    div(ng-repeat="category in categories")
-      div.row
-          div.col-xs-12
-              h3 {{ category._id }}
-          div(ng-repeat="item in category.items")
-            div.col-xs-6.col-md-3
-              div.thumbnail
-                img(src="{{ item.url }}"
-                    ng-click="popupImage(item.url)" 
-                    data-toggle="modal" data-target="#photoModal")
+    div(ng-if="categories")
+      div(ng-repeat="category in categories")
+        div.row
+            div.col-xs-12
+                h3 {{ category._id }}
+            div(ng-repeat="item in category.items")
+              div.col-xs-6.col-md-3
+                div.thumbnail
+                  img(src="{{ item.url }}"
+                      ng-click="popupImage(item.url)" 
+                      data-toggle="modal" data-target="#photoModal")
+                  div.caption.text-center
+                    h3 {{ item.artist }}
               
     div.modal.fade#photoModal(tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true")
         div.modal-dialog.modal-lg

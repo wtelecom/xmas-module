@@ -52,14 +52,14 @@ exports.dbSettings = {
 exports.ldapSettings = ldapConfig.ldapSettings;
 
 // you can select 'ldap' or 'local' method in order to 
-exports.auth_method = 'local'
+exports.auth_method = 'local';
 
 // Site settings
 exports.site = {
     // Site title
     title: {
         property: 'title',
-        content: 'IntrepidJS'
+        content: 'XMAS'
     },
     // Default theme
     theme: {
