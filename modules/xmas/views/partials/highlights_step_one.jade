@@ -12,7 +12,15 @@ div(ng-controller="CtrlHighlight")
                       data-toggle="modal" data-target="#photoModal")
                   div.caption.text-center
                     h3 {{ item.artist }}
-              
+    div(ng-if="!categories.length")
+      div.row
+        div.alert.alert-danger.col-xs-12
+          .row
+            .col-xs-12.col-md-4
+              img(src="images/gift.png")
+            .col-xs-12.col-md-8
+              h2 No hay XMAS aún, ¿quieres ser el primero?
+
     div.modal.fade#photoModal(tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true")
         div.modal-dialog.modal-lg
             div.modal-content(style="display: initial;")

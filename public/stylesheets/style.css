@@ -1,6 +1,6 @@
 body {
     top: 40px;
-    background-color: #F5F7FA;
+    background-color: #FCECEE;
     overflow-y: scroll;
 }
 
@@ -13,21 +13,25 @@ body {
 }
 
 .navbar-custom {
-    background-color: #FFF;
-    border-color: #FFF;
+    background-color: #DA4453;
+    border-color: #DA4453;
+}
+
+.navbar {
+    border-radius: 0;
 }
 
 .navbar-custom a {
-    color: #3BAFDA;
+    color: #FFF;
     line-height: 18px !important;
 }
 
 .navbar-custom a:hover {
-    background-color: #FFF;
+    background-color: #C02333;
 }
 
 ul.main-menu li.active {
-    border-bottom: 3px solid #3BAFDA;
+    border-bottom: 3px solid #FFF;
 }
 
 .carousel {
@@ -778,4 +782,7 @@ canvas {
 .form-signup .has-feedback .form-control-feedback {
     top: 5px;
     z-index: 2;
+}
+canvas {
+    display: block;
 }
