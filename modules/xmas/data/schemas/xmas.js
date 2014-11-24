@@ -40,7 +40,7 @@ xmasSchema.statics.getImages = function(req, next) {
             };
             break;
           case 2:
-            project = {category: 1, url: 1, votes: 1, artist: 1, votes: 1};
+            project = {category: 1, url: 1, votes: 1, artist: 1};
             group = {
                 _id: "$category",
                 total: {
@@ -84,9 +84,9 @@ xmasSchema.statics.getImages = function(req, next) {
                 } else if (step == 2) {
                     _.each(result, function(category) {
                         if (!req.isAuthenticated()) {
-                            _.each(category.items, function(item) {
-                                delete item.votes;
-                            });
+                            // _.each(category.items, function(item) {
+                            //     delete item.votes;
+                            // });
                         } else {
                             _.each(category.items, function(item) {
                                 var check_vote = _.find(item.votes, function(vote) {
@@ -97,7 +97,7 @@ xmasSchema.statics.getImages = function(req, next) {
                                     }
                                 });
 
-                                delete item.votes;
+                                // delete item.votes;
 
                                 if (check_vote) {
                                     item['voted'] = true;
