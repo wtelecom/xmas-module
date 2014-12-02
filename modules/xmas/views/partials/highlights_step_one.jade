@@ -7,7 +7,7 @@ div(ng-controller="CtrlHighlight")
             div(ng-repeat="item in category.items")
               div.col-xs-6.col-md-3
                 div.thumbnail
-                  img(src="{{ item.url }}"
+                  img(ng-src="{{ item.url }}"
                       ng-click="popupImage(item.url)" 
                       data-toggle="modal" data-target="#photoModal")
                   div.caption.text-center
@@ -17,7 +17,7 @@ div(ng-controller="CtrlHighlight")
         div.alert.alert-danger.col-xs-12
           .row
             .col-xs-12.col-md-4
-              img(src="images/gift.png")
+              img(ng-src="images/gift.png")
             .col-xs-12.col-md-8
               h2 No hay XMAS aún, ¿quieres ser el primero?
 
@@ -31,4 +31,4 @@ div(ng-controller="CtrlHighlight")
                     .modal-body
                         div.col-xs-12
                           div.thumbnail
-                            img(src="{{modal_image}}")
+                            img(ng-src="{{modal_image}}")
